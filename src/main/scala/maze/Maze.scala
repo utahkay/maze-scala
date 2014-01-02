@@ -23,30 +23,30 @@ object Maze {
 class Maze(val width: Int, val height: Int) {
   import Maze._
   
-  var visited = Set.empty[Loc]
-  
-  def neighbors(current: Loc): Set[Loc] = 
+  def neighbors(current: Loc, visited: Set[Loc]): Set[Loc] = 
     directions.map(current + _).filter(inBounds) -- visited
   
   def inBounds(loc: Loc): Boolean = 
     loc.x >= 0 && loc.x < width && loc.y >= 0 && loc.y < height
 
-  def buildImpl(current: Loc = Loc(0,0), doors: Set[Door] = Set()): Set[Door] = {
-    visited = visited + current  
-    val nbors = shuffle(neighbors(current))
+  def buildImpl(current: Loc, doors: Set[Door], visited: Set[Loc]): (Set[Door], Set[Loc]) = {
+    var newvisited = visited + current  
     var newdoors = doors
+    val nbors = shuffle(neighbors(current, newvisited))
     nbors.foreach { n =>
-      if (!visited.contains(n)) {
-        newdoors = newdoors ++ buildImpl(n, doors + ((current, n)))
+      if (!newvisited.contains(n)) {
+        val result = buildImpl(n, doors + ((current, n)), newvisited)
+        newdoors = newdoors ++ result._1
+        newvisited = newvisited ++ result._2
       }
     }
-    newdoors
+    (newdoors, newvisited)
   }
     
   def build(): Set[Door] = {
-    val doors = buildImpl(Loc(width-1, height-1), Set())
+    val result = buildImpl(Loc(width-1, height-1), Set(), Set())
     // add door for entry 
-    doors + ((Loc(0,0),Loc(-1,0)))
+    result._1 + ((Loc(0,0),Loc(-1,0)))
     // TODO: add door for exit *sigh*
   }
 }

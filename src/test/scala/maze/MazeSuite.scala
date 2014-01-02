@@ -20,19 +20,18 @@ class  MazeSuite extends FunSuite {
   }
   
   test("All neighbors") {
-    val unvisited = new Maze(10,10).neighbors(Loc(1,1))
+    val unvisited = new Maze(10,10).neighbors(Loc(1,1), Set())
     assert(unvisited === Set(Loc(0,1), Loc(2,1), Loc(1,0), Loc(1,2)))
   }
   
   test("Neighbors are within maze bounds") {
-    val unvisited = new Maze(1,1).neighbors(Loc(0,0))
+    val unvisited = new Maze(1,1).neighbors(Loc(0,0), Set())
     assert(unvisited === Set())
   }
   
   test("Neighbors are unvisited") {
     val maze = new Maze(10,10)
-    maze.visited = Set(Loc(2,1), Loc(1,2), Loc(3,4))
-    val unvisited = maze.neighbors(Loc(1,1))
+    val unvisited = maze.neighbors(Loc(1,1), Set(Loc(2,1), Loc(1,2), Loc(3,4)))
     assert(unvisited === Set(Loc(0,1), Loc(1,0)))
   }
   
