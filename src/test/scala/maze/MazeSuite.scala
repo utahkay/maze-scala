@@ -1,14 +1,11 @@
 package maze
 
-import scala.util.Random
-
 import org.scalatest._
-import org.scalatest.prop.Checkers
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class  MazeSuite extends FunSuite  with Checkers {
+class  MazeSuite extends FunSuite {
   import Maze._
 
   test("Shuffle") {
@@ -32,40 +29,12 @@ class  MazeSuite extends FunSuite  with Checkers {
     assert(unvisited === Set())
   }
   
-  ignore("Neighbors are unvisited") {
+  test("Neighbors are unvisited") {
     val maze = new Maze(10,10)
     maze.visited = Set(Location(2,1), Location(1,2), Location(3,4))
     val unvisited = maze.neighbors(Location(1,1))
     assert(unvisited === Set(Location(0,1), Location(1,0)))
   }
   
-  test("Open north") {
-    val maze = new Maze(10,10)
-    maze.doors = Set((Location(1,1), Location(1,0)))
-    assert(maze.openNorth(Location(1,1)) === true)
-  }
-  
-  test("Not open north") {
-    val maze = new Maze(5,5)
-    maze.doors = Set((Location(1,1), Location(1,2)))
-    assert(maze.openNorth(Location(1,1)) === false)
-  }
-    
-  test("Open west") {
-    val maze = new Maze(5,5)
-    maze.doors = Set((Location(1,1), Location(2,1)))
-    assert(maze.openWest(Location(2,1)) === true)
-  }
-      
-  test("Not open west") {
-    val maze = new Maze(5,5)
-    maze.doors = Set((Location(1,1), Location(1,0)))
-    assert(maze.openWest(Location(1,1)) === false)
-  }
-  
-  test("Build maze") {
-    val maze = new Maze(10,10)
-    maze.build()
-    println(maze.printGrid().mkString("\n"))
-  }
 }
+

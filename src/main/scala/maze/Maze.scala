@@ -42,29 +42,5 @@ class Maze(val height: Int, val width: Int) {
     }
     doors
   }
-    
-  def printCell(x: Int, y: Int): List[String] = {
-    if (y == height) List("+--")
-    else List(
-        if (openNorth(Location(x,y))) "+  " else "+--", 
-        if (openWest(Location(x,y))) "   " else "|  ")
-  }
-  
-  def printRow(y: Int): List[String] = {
-    val row = (0 until width).toList.map(printCell(_, y))
-    val newRow = row :+ List("+", "|")
-    List.transpose(newRow).map(_.mkString)
-  }
-  
-  def printGrid(): List[String] = {
-    (0 to height).toList.flatMap(printRow(_))
-  }
-  
-  def openNorth(loc: Location): Boolean = 
-    doors.contains(loc, loc + North) || doors.contains(loc + North, loc)
-  
-  def openWest(loc: Location): Boolean = 
-    doors.contains(loc, loc + West) || doors.contains(loc + West, loc)
-
-    
 }
+
