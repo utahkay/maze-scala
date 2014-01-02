@@ -20,7 +20,7 @@ object Maze {
   def shuffle[T](set: Set[T]): List[T] = Random.shuffle(set.toList)
 }
 
-class Maze(val height: Int, val width: Int) {
+class Maze(val width: Int, val height: Int) {
   import Maze._
   
   var visited = Set.empty[Loc]
@@ -31,16 +31,23 @@ class Maze(val height: Int, val width: Int) {
   def inBounds(loc: Loc): Boolean = 
     loc.x >= 0 && loc.x < width && loc.y >= 0 && loc.y < height
 
-  def build(current: Loc = Loc(0,0), doors: Set[Door] = Set()): Set[Door] = {
+  def buildImpl(current: Loc = Loc(0,0), doors: Set[Door] = Set()): Set[Door] = {
     visited = visited + current  
     val nbors = shuffle(neighbors(current))
     var newdoors = doors
     nbors.foreach { n =>
       if (!visited.contains(n)) {
-        newdoors = newdoors ++ build(n, doors + ((current, n)))
+        newdoors = newdoors ++ buildImpl(n, doors + ((current, n)))
       }
     }
     newdoors
+  }
+    
+  def build(): Set[Door] = {
+    val doors = buildImpl(Loc(width-1, height-1), Set())
+    // add door for entry 
+    doors + ((Loc(0,0),Loc(-1,0)))
+    // TODO: add door for exit *sigh*
   }
 }
 

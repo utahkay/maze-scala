@@ -1,6 +1,6 @@
 package maze
 
-class MazePrinter(val height: Int, val width: Int) {
+class MazePrinter(val width: Int, val height: Int) {
   import Maze._
     
   def printCell(doors: Set[Door], loc: Loc): List[String] = {
