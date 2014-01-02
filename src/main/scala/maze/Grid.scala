@@ -25,16 +25,19 @@ class Grid(val width: Int, val height: Int, val doors: Set[Door], val visited: S
 
   private def printRow(y: Int): List[String] = {
     val row = (0 until width).toList.map(x => printCell(Loc(x, y)))
-    val newRow = row :+ List("+", "|")
+    val rightSide = if (y == height-1) " " else "|"
+    val newRow = row :+ List("+", rightSide)
     List.transpose(newRow).map(_.mkString)
   }
   
+  private val entrance = Loc(0,0)
+
   private def printCell(loc: Loc): List[String] = {
     if (loc.y == height) 
       List("+--")
     else List(
       if (openNorth(loc)) "+  " else "+--", 
-      if (openWest(loc))  "   " else "|  "
+      if (openWest(loc) || loc == entrance) "   " else "|  "
     )
   }
   

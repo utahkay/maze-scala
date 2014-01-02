@@ -35,10 +35,8 @@ object MazeBuilder {
   }
     
   def build(width: Int, height: Int): Grid = {
-    val result = buildImpl(Loc(width-1, height-1), new Grid(width, height, Set(), Set()))
-    // add door for entry 
-    result.addDoor(Door(Loc(0,0), Loc(-1,0)))
-    // TODO: add door for exit *sigh*
+    val exit = Loc(width-1, height-1)
+    buildImpl(exit, new Grid(width, height, Set(), Set()))
   }  
 }
 
