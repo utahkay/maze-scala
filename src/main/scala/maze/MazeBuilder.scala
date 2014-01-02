@@ -5,11 +5,11 @@ import scala.util.Random
 object MazeTypes {
   case class Direction(val dx: Int, val dy: Int)
 
-  case class Loc(val x: Int, val y: Int) {
-    def +(that: Direction): Loc = Loc(x + that.dx, y + that.dy)
+  case class Point(val x: Int, val y: Int) {
+    def +(that: Direction): Point = Point(x + that.dx, y + that.dy)
   }
   
-  case class Door(val from: Loc, to: Loc)
+  case class Door(val from: Point, to: Point)
 
   val North = Direction(0,-1)
   val South = Direction(0,1)
@@ -21,9 +21,12 @@ object MazeTypes {
 object MazeBuilder {
   import MazeTypes._
 
-  def shuffle[T](set: Set[T]): List[T] = Random.shuffle(set.toList)
+  def build(width: Int, height: Int): Grid = {
+    val exit = Point(width-1, height-1)
+    buildImpl(exit, new Grid(width, height, Set(), Set()))
+  }  
   
-  def buildImpl(current: Loc, grid: Grid): Grid = {
+  private def buildImpl(current: Point, grid: Grid): Grid = {
     var newgrid = grid.markVisited(current)
     val nbors = shuffle(grid.neighbors(current))
     nbors.foreach { n =>
@@ -33,11 +36,8 @@ object MazeBuilder {
     }
     newgrid
   }
-    
-  def build(width: Int, height: Int): Grid = {
-    val exit = Loc(width-1, height-1)
-    buildImpl(exit, new Grid(width, height, Set(), Set()))
-  }  
+  
+  def shuffle[T](set: Set[T]): List[T] = Random.shuffle(set.toList)
 }
 
 

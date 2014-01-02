@@ -16,8 +16,8 @@ class MazeBuilderSuite extends FunSuite {
     assert(shuffles.forall(_.toSet == set))
   }
   
-  test("Loc + Direction = New Loc") {
-    assert(Loc(1,2) + Direction(3,4) === Loc(4, 6))
+  test("Point + Direction = New Point") {
+    assert(Point(1,2) + Direction(3,4) === Point(4, 6))
   }
   
   test("All locations should be visited") {
@@ -31,7 +31,7 @@ class MazeBuilderSuite extends FunSuite {
   }
 
   test("Print maze") {
-    val size = 10
+    val size = 15
     val grid = MazeBuilder.build(size, size)
     println(grid.printGrid.mkString("\n"))
   }
