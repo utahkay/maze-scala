@@ -3,7 +3,7 @@ package maze
 class MazePrinter(val height: Int, val width: Int) {
   import Maze._
     
-  def printCell(doors: Set[Door], loc: Location): List[String] = {
+  def printCell(doors: Set[Door], loc: Loc): List[String] = {
     if (loc.y == height) 
       List("+--")
     else List(
@@ -13,7 +13,7 @@ class MazePrinter(val height: Int, val width: Int) {
   }
   
   def printRow(doors: Set[Door], y: Int): List[String] = {
-    val row = (0 until width).toList.map(x => printCell(doors, Location(x, y)))
+    val row = (0 until width).toList.map(x => printCell(doors, Loc(x, y)))
     val newRow = row :+ List("+", "|")
     List.transpose(newRow).map(_.mkString)
   }
@@ -22,9 +22,9 @@ class MazePrinter(val height: Int, val width: Int) {
     (0 to height).toList.flatMap(printRow(doors, _))
   }
   
-  def openNorth(doors: Set[Door], loc: Location): Boolean = 
+  def openNorth(doors: Set[Door], loc: Loc): Boolean = 
     doors.contains(loc, loc + North) || doors.contains(loc + North, loc)
   
-  def openWest(doors: Set[Door], loc: Location): Boolean = 
+  def openWest(doors: Set[Door], loc: Loc): Boolean = 
     doors.contains(loc, loc + West) || doors.contains(loc + West, loc)
 }

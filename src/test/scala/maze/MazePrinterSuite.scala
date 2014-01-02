@@ -15,36 +15,36 @@ class MazePrinterSuite extends FunSuite {
   
   test("Open north") {
     new TestFixture {
-      val doors = Set((Location(1,1), Location(1,0)))
-      assert(printer.openNorth(doors, Location(1,1)) === true)
+      val doors = Set((Loc(1,1), Loc(1,0)))
+      assert(printer.openNorth(doors, Loc(1,1)) === true)
     }
   }
   
   test("Not open north") {
     new TestFixture {
-      val doors = Set((Location(1,1), Location(1,2)))
-      assert(printer.openNorth(doors, Location(1,1)) === false)
+      val doors = Set((Loc(1,1), Loc(1,2)))
+      assert(printer.openNorth(doors, Loc(1,1)) === false)
     }
   }
     
   test("Open west") {
     new TestFixture {
-      val doors = Set((Location(1,1), Location(2,1)))
-      assert(printer.openWest(doors, Location(2,1)) === true)
+      val doors = Set((Loc(1,1), Loc(2,1)))
+      assert(printer.openWest(doors, Loc(2,1)) === true)
     }
   }
       
   test("Not open west") {
     new TestFixture {
-      val doors = Set((Location(1,1), Location(1,0)))
-      assert(printer.openWest(doors, Location(1,1)) === false)
+      val doors = Set((Loc(1,1), Loc(1,0)))
+      assert(printer.openWest(doors, Loc(1,1)) === false)
     }
   }
   
   test("Build maze") {
-    new TestFixture {
-      val doors = new Maze(10,10).build()
-      println(printer.printGrid(doors).mkString("\n"))
-    }
+    val size = 10
+    val doors = new Maze(size,size).build()
+    val printer = new MazePrinter(size,size)
+    println(printer.printGrid(doors).mkString("\n"))
   }
 }
