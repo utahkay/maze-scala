@@ -6,7 +6,7 @@ import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class GridSuite extends FunSuite {
-  import MazeBuilder._
+  import MazeTypes._
   
   test("All neighbors") {
     val nbors = new Grid(10, 10, Set(), Set()).neighbors(Loc(1,1))
@@ -24,25 +24,25 @@ class GridSuite extends FunSuite {
   }  
   
   test("Open north") {
-    val doors = Set((Loc(1,1), Loc(1,0)))
+    val doors = Set(Door(Loc(1,1), Loc(1,0)))
     val grid = new Grid(10,10,doors,Set())
     assert(grid.openNorth(Loc(1,1)) === true)
   }
   
   test("Not open north") {
-    val doors = Set((Loc(1,1), Loc(1,2)))
+    val doors = Set(Door(Loc(1,1), Loc(1,2)))
     val grid = new Grid(10,10,doors,Set())
     assert(grid.openNorth(Loc(1,1)) === false)
   }
     
   test("Open west") {
-    val doors = Set((Loc(1,1), Loc(2,1)))
+    val doors = Set(Door(Loc(1,1), Loc(2,1)))
     val grid = new Grid(10,10,doors,Set())
     assert(grid.openWest(Loc(2,1)) === true)
   }
       
   test("Not open west") {
-    val doors = Set((Loc(1,1), Loc(1,0)))
+    val doors = Set(Door(Loc(1,1), Loc(1,0)))
     val grid = new Grid(10,10,doors,Set())
     assert(grid.openWest(Loc(1,1)) === false)
   }  
